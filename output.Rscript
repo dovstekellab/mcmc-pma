@@ -1,0 +1,75 @@
+# mcmc-pma, Bayesian parameter estimation for phenotype microarray data.
+#
+# Copyright 2011-2015 Matthias Gerstgrasser.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 
+
+
+
+filelist <- list.files("wells", full.names=TRUE)
+pdf(file="report.pdf", paper="a4")
+for (f in 1:length(filelist)) {
+    filename = filelist
+    d = read.csv(paste(filelist[f], "/data.csv", sep=""), header=FALSE)
+    if(nrow(d) != 2){
+        par(mfrow=c(2,2))
+    }
+    else{
+        par(mfrow=c(nrow(d),2))
+    }
+    for (i in 2:nrow(d)){
+        t = readLines(paste(filelist[f], "/parameters_", formatC(i-2, width=3, flag="0"), ".txt", sep=""))
+        plot.default(1:ncol(d)/4, d[1,], ylim=c(0,450), xlab="time", ylab="signal")
+        lines(1:ncol(d)/4, d[i,], col="red", lwd=3)
+        plot(0:1, type = "n", xaxt="n", yaxt="n", bty="n", xlab = "", ylab = "")
+        for (j in 1:length(t)){text(1.5,1-j/10,t[j], cex=0.5)}
+    }
+}
+dev.off()
+
+
+
+pdf(file="report-initialparameters.pdf", paper="a4")
+for (f in 1:length(filelist)) {
+    filename = filelist
+    d = read.csv(paste(filelist[f], "/data_initialparameters.csv", sep=""), header=FALSE)
+    if(nrow(d) != 2){
+        par(mfrow=c(2,2))
+    }
+    else{
+        par(mfrow=c(nrow(d),2))
+    }
+    for (i in 2:nrow(d)){
+        t = readLines(paste(filelist[f], "/parameters_", formatC(i-2, width=3, flag="0"), ".txt", sep=""))
+        plot.default(1:ncol(d)/4, d[1,], ylim=c(0,450), xlab="time", ylab="signal")
+        lines(1:ncol(d)/4, d[i,], col="red", lwd=3)
+        plot(0:1, type = "n", xaxt="n", yaxt="n", bty="n", xlab = "", ylab = "")
+        for (j in 1:length(t)){text(1.5,1-j/10,t[j], cex=0.5)}
+    }
+}
+dev.off()
+
+
+
+for (f in 1:length(filelist)) {
+    filename = filelist
+    d = read.csv(paste(filelist[f], "/data.csv", sep=""), header=FALSE)
+    for (i in 2:nrow(d)){
+        pdf(paste(filelist[f], "/plot_", formatC(i-2, width=3, flag="0"), ".pdf", sep=""))
+        plot.default(1:ncol(d)/4, d[1,], ylim=c(0,450), xlab="time", ylab="signal")
+        lines(1:ncol(d)/4, d[i,], col="red", lwd=3)
+        dev.off()
+    }
+}
