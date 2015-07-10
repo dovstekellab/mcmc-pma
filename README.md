@@ -7,7 +7,7 @@ About: A project for fitting different microbial growth models to Biolog [1] phe
 Requirements: GNU Scientific Library installed and header files accessible. Tested with GSL version 1.16. Optionally, OpenMP can be used. (See main.cpp comments.) Optionally, with R installed and Rscript accessible, PDF plots will be generated.
 
 
-To compile: "clang++ *.cpp -lgsl -lc -lm -lgslcblas -lgomp -O3 -o ~/bin/mcmc" For gcc replace clang++ by g++. Tested with clang 3.6.0 and gcc 4.9.2 on Ubuntu Linux and Mac OS X, both on x86-64.
+To compile: "clang++ *.cpp -lgsl -lc -lm -lgslcblas -O3 -o ~/bin/mcmc" For gcc replace clang++ by g++. Tested with clang 3.6.0 and gcc 4.9.2 on Ubuntu Linux and Mac OS X, both on x86-64. Add -lgomp if you want to compile with OMP support, and see the comments in main.cpp.
 
 
 To run: "~/bin/mcmc filename.csv" will run the MCMC analysis for a file containing raw Biolog date in CSV form.
@@ -18,6 +18,8 @@ Input file format: The program is designed to work with data in CSV format, obta
 If you are using a different data format, export data to a CSV file with wells in columns, time in rows. Add an extra row and column at the beginning, and put the string "Time" in the first cell in the fist line. Optionally, you can add well labels to the remainder of the first line.
 
 Alternatively, this behaviour is easily modified in the csvdata class constructor in the csvdata.cpp file.
+
+The program expects \n (or \r\n) as the newline character.
 
 
 Raw data preprocessing: The data we worked with required removing of artifacts at the end of some phenotypes' data. If this is not required remove the corresponding line in main.cpp.
