@@ -33,7 +33,7 @@ csvdata::csvdata(std::string filename){
    
     //Get labels:
     std::vector<std::string> l(1);
-    while(std::getline(data,line, ‘\n’)) {
+    while(std::getline(data,line, '\n')) {
         std::vector<std::string> ltemp(0);
         std::stringstream  lineStream(line);
         
@@ -55,7 +55,7 @@ csvdata::csvdata(std::string filename){
     l.pop_back();
         
     //Get data:
-    while(std::getline(data,line, ‘\n’))
+    while(std::getline(data,line, '\n'))
     {
         std::stringstream  lineStream(line);
         std::vector<double> current_line(0);
